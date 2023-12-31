@@ -67,3 +67,10 @@
   background-color: #f0f0f0;
   border-radius: 5px;
 }
+.login {
+  padding: 0 20px;
+  cursor: pointer;
+}
+.filter {
+  display: flex;
+}
