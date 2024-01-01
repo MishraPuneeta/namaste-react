@@ -19,13 +19,21 @@ const RestaurantMenu = () => {
 
   const restData = restInfo?.cards[2]?.card?.card?.info;
 
-  const menuItems = restInfo?.cards
-    ?.filter((menuCard) => {
-      return Object.keys(menuCard).includes("groupedCard");
-    })[0]
-    ?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter((menu) => {
-      return Object.keys(menu?.card?.card).includes("categories");
-    })[0]?.card?.card?.categories[0].itemCards;
+  const menuItems =
+    restInfo?.cards
+      ?.filter((menuCard) => {
+        return Object.keys(menuCard).includes("groupedCard");
+      })[0]
+      ?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter((menu) => {
+        return Object.keys(menu?.card?.card).includes("itemCards");
+      })[0]?.card?.card?.itemCards ||
+    restInfo?.cards
+      ?.filter((menuCard) => {
+        return Object.keys(menuCard).includes("groupedCard");
+      })[0]
+      ?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter((menu) => {
+        return Object.keys(menu?.card?.card).includes("categories");
+      })[0]?.card?.card?.categories[0].itemCards;
 
   return restInfo === null ? (
     <Shimmer />
@@ -40,7 +48,7 @@ const RestaurantMenu = () => {
       <ul>
         {menuItems?.map((menu) => {
           return (
-            <li>
+            <li key={menu?.card?.info?.id}>
               {menu?.card?.info?.name} - RS.
               {menu?.card?.info?.price / 100 ||
                 menu?.card?.info?.defaultPrice / 100}
